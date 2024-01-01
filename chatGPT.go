@@ -3,12 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/sashabaranov/go-openai"
 )
 
 func ChatGPT() {
-	client := openai.NewClient("your token")
+	key := os.Getenv("GPT_KEY")
+	client := openai.NewClient(key)
 	resp, err := client.CreateChatCompletion(
 		context.Background(),
 		openai.ChatCompletionRequest{
