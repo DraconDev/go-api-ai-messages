@@ -15,12 +15,6 @@ func LoadEnv() string {
 		fmt.Printf("Error loading .env file: %v\n", err)
 		os.Exit(1)
 	}
-
-	if err != nil {
-		fmt.Printf("Error loading .env file: %v\n", err)
-		os.Exit(1)
-	}
-
 	key := os.Getenv("GPT_KEY")
 	if key == "" {
 		fmt.Println("The environment variable GPT_KEY is not set.")
@@ -30,7 +24,7 @@ func LoadEnv() string {
 	return key
 }
 
-func ChatGPT() {
+func ChatGPT() string {
 
 	client := openai.NewClient(LoadEnv())
 
@@ -46,11 +40,11 @@ func ChatGPT() {
 			},
 		},
 	)
-
 	if err != nil {
 		fmt.Printf("ChatCompletion error: %v\n", err)
-		return
 	}
 
 	fmt.Println(resp.Choices[0].Message.Content)
+
+	return (resp.Choices[0].Message.Content)
 }
