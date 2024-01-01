@@ -13,5 +13,11 @@ func main() {
 			"message": "pong",
 		})
 	})
+	r.GET("/message", func(c *gin.Context) {
+		ChatGPT()
+		c.JSON(http.StatusOK, gin.H{
+			"message": "message",
+		})
+	})
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

@@ -5,12 +5,35 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/sashabaranov/go-openai"
 )
 
-func ChatGPT() {
+func LoadEnv() string {
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Printf("Error loading .env file: %v\n", err)
+		os.Exit(1)
+	}
+
+	if err != nil {
+		fmt.Printf("Error loading .env file: %v\n", err)
+		os.Exit(1)
+	}
+
 	key := os.Getenv("GPT_KEY")
-	client := openai.NewClient(key)
+	if key == "" {
+		fmt.Println("The environment variable GPT_KEY is not set.")
+		os.Exit(1)
+
+	}
+	return key
+}
+
+func ChatGPT() {
+
+	client := openai.NewClient(LoadEnv())
+
 	resp, err := client.CreateChatCompletion(
 		context.Background(),
 		openai.ChatCompletionRequest{
